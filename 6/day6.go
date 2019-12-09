@@ -50,8 +50,6 @@ func orbitTransfer(m map[string]string, start, end string) int {
 		p1--
 		p2--
 	}
-	fmt.Println(path1)
-	fmt.Println(path2)
 	return p1 + p2
 }
 
