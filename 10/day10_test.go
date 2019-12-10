@@ -165,4 +165,5 @@ func TestPoint(t *testing.T) {
 	fmt.Println(cmplx.Abs(1 + 1i))
 	fmt.Println(cmplx.Phase((0 + 1i) * 1i))
 	fmt.Println(cmplx.Phase((1) * 1i))
+	fmt.Println(cmplx.Phase(-1i))
 }

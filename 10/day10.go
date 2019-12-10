@@ -77,6 +77,7 @@ func (field AsteroidMap) findVisibleAsteroids(x, y int) []complex128 {
 
 func (field AsteroidMap) isVisible(x1, y1, x2, y2 int) bool {
 	//fmt.Println("isVisible", x1, y1, x2, y2)
+	// calculate unit vector
 	dx, dy := x2-x1, y2-y1
 	gcd := GCD(dx, dy)
 	//fmt.Println("dx", dx, "dy", dy)
@@ -102,7 +103,8 @@ func (field AsteroidMap) isVisible(x1, y1, x2, y2 int) bool {
 			dy = -1
 		}
 	}
-	//fmt.Println("dx", dx, "dy", dy)
+	// fmt.Println("dx", dx, "dy", dy)
+	// move from origin to destination checking for obstacles
 	for {
 		x1 += dx
 		y1 += dy
