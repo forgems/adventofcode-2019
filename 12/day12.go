@@ -83,9 +83,19 @@ func FindCycle(moons []Moon) (total int64) {
 	x := FindCyclesInDimension(moons, 0)
 	y := FindCyclesInDimension(moons, 1)
 	z := FindCyclesInDimension(moons, 2)
-	a := int64(x*y) / GCD(x, y)
-	b := int64(z*a) / GCD(z, a)
-	return b
+	return LCM(x, y, z)
+}
+
+func LCM(vals ...int64) int64 {
+	/*
+		Least common multiplier
+	*/
+	for len(vals) > 1 {
+		v := vals[0] * vals[1] / GCD(vals[0], vals[1])
+		vals = vals[1:]
+		vals[0] = v
+	}
+	return vals[0]
 }
 
 func GCD(a, b int64) int64 {
