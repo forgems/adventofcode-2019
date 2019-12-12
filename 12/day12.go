@@ -74,18 +74,6 @@ func ReadMoons(r io.Reader) []Moon {
 	return moons
 }
 
-func FindCycle(moons []Moon) (total int64) {
-	/*
-		Dimenions are independant from each other
-		so we find a system cycle for each of the dimensions
-		and we find a Least common multiple of those cycles.
-	*/
-	x := FindCyclesInDimension(moons, 0)
-	y := FindCyclesInDimension(moons, 1)
-	z := FindCyclesInDimension(moons, 2)
-	return LCM(x, y, z)
-}
-
 func LCM(vals ...int64) int64 {
 	/*
 		Least common multiplier
@@ -108,17 +96,16 @@ func GCD(a, b int64) int64 {
 	return int64(a)
 }
 
-func FindCyclesInDimension(moons []Moon, d int) (cycle int64) {
+func FindCycle(moons []Moon) (cycle int64) {
 	/*
-		Return the number of cycles until the system goes back to the same state on given
-		dimension
+		Return the number of cycles until the system goes back to the same state
 	*/
+	var cycles [3]int64
 	// copy initial state
 	initial := make([]Moon, len(moons))
 	copy(initial, moons)
-
 	stop := false
-	for cycle = 0; !stop; cycle++ {
+	for cycle = 1; !stop; cycle++ {
 		// apply Gravity
 		for j := range moons {
 			for k := j + 1; k < len(moons); k++ {
@@ -132,11 +119,25 @@ func FindCyclesInDimension(moons []Moon, d int) (cycle int64) {
 		// for each moon check id it's position and velocity in given dimension
 		// is the same as initial state
 		stop = true
-		for m := range moons {
-			stop = stop && (moons[m].Position[d] == initial[m].Position[d] && moons[m].Velocity[d] == initial[m].Velocity[d])
+		for d := range cycles {
+			if cycles[d] > 0 {
+				continue
+			}
+			all_same := true
+			for m := range moons {
+				if moons[m].Position[d] != initial[m].Position[d] || moons[m].Velocity[d] != initial[m].Velocity[d] {
+					all_same = false
+					break
+				}
+			}
+			if all_same {
+				cycles[d] = cycle
+				continue
+			}
+			stop = false
 		}
 	}
-	return cycle
+	return LCM(cycles[:]...)
 }
 
 func Part1(moons []Moon, n int) (total_energy float64) {
