@@ -54,11 +54,15 @@ func CompressPath(path string, idx int) (funcPath string, dict map[string]string
 	if idx > 3 {
 		return
 	}
-	if len(alphabet) == 3 {
-		fmt.Println("CompressPath", path, len(alphabet))
-	}
+	fmt.Println("CompressPath", path, len(alphabet))
 	for i := 0; i < len(path); i += 1 {
-		for j := i + 2; j <= len(path)-i; j++ {
+		if path[i] >= 'A' && path[i] <= 'C' {
+			continue
+		}
+		for j := len(path); j > i; j-- {
+			if path[j-1] >= 'A' && path[j-1] <= 'C' {
+				continue
+			}
 			subpath := path[i:j]
 			if strings.Index(path[j:], subpath) >= 0 {
 				CompressPath(strings.Replace(path, subpath, string('A'+idx), -1), idx+1)

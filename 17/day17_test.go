@@ -51,6 +51,7 @@ func TestFindRotation(t *testing.T) {
 
 func TestCompress(t *testing.T) {
 	path := "R8R8R4R4R8L6L2R4R4R8R8R8L6L2"
+	path = "L6R12L4L6R6L6R12R6L6R12L6L10L10R6L6R12L4L6R6L6R12L6L10L10R6L6R12L4L6R6L6R12L6L10L10R6"
 	//path = "PPQQPRSQQPPPRS"
 	//expected := "A,B,C,A,B,C"
 	//a := "R,8,R,8"
